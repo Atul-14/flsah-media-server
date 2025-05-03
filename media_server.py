@@ -16,7 +16,8 @@ with open("users.json") as f:
 CATEGORIES = {
     "Movies": os.getenv("MOVIES_PATH"),
     "Series": os.getenv("SERIES_PATH"),
-    "Photos": os.getenv("PHOTOS_PATH")
+    "Photos": os.getenv("PHOTOS_PATH"),
+    "Uploads": os.getenv("UPLOADS_PATH")
 }
 
 # Home page with media listing
@@ -40,6 +41,24 @@ def index():
             media[category] = []
 
     return render_template('index.html', media=media, username=session['username'])
+
+# To upload file by Admin only 
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        category = request.form['category']
+        uploaded_file = request.files['file']
+
+        if uploaded_file and category in CATEGORIES:
+            save_path = os.path.join(CATEGORIES[category], uploaded_file.filename)
+            uploaded_file.save(save_path)
+            return redirect(url_for('index'))
+
+    return render_template('upload.html', categories=CATEGORIES.keys())
+
 
 # Serve media files from actual paths
 @app.route('/media/<category>/<path:filepath>')

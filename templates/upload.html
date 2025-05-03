@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Media</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        form {
+            background-color: #1e1e1e;
+            padding: 1.5rem;
+            border-radius: 10px;
+            max-width: 400px;
+        }
+        label, select, input[type="file"], button {
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h2>Admin Upload Panel</h2>
+
+    {% if message %}
+        <p style="color: lightgreen;">{{ message }}</p>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        <label for="category">Upload to:</label>
+        <select name="category" id="category" required>
+            {% for cat in categories %}
+                <option value="{{ cat }}">{{ cat }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="file">Choose file:</label>
+        <input type="file" name="file" id="file" required>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <p><a href="{{ url_for('index') }}" style="color: lightblue;">⬅ Back to Media</a></p>
+</body>
+</html>
