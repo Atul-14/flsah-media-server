@@ -1,11 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Welcome</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>📺 My Media Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #eee;
+            padding: 2rem;
+        }
+        h1, h2 {
+            color: #00f2ff;
+        }
+        .category {
+            margin-bottom: 2rem;
+        }
+        .file-list {
+            padding-left: 1rem;
+        }
+        a {
+            color: #00ffcc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .logout {
+            float: right;
+            color: #ff6a6a;
+        }
+    </style>
 </head>
 <body>
-    <h1>🏠 Welcome {{ username }}</h1>
-    <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    <h1>Welcome, {{ username }}! <a href="{{ url_for('logout') }}" class="logout">Logout</a></h1>
+
+    {% for category, files in media.items() %}
+        <div class="category">
+            <h2>{{ category }}</h2>
+            {% if files %}
+                <ul class="file-list">
+                    {% for file in files %}
+                        <li>
+                            <a href="{{ url_for('serve_media', category=category, filepath=file) }}" target="_blank">
+                                ▶️ {{ file }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No media found in this category.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
 </body>
 </html>

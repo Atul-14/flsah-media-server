@@ -1,9 +1,33 @@
 body {
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
     padding: 20px;
-    background-color: #f4f4f4;
+    margin: 0;
 }
-input, button {
-    padding: 8px;
-    margin-top: 5px;
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.media-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.media-card {
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    flex: 1 0 200px;
 }
